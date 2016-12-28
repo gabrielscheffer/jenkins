@@ -8,6 +8,7 @@
 #
 source /usr/local/bin/jenkins-common.sh
 source /usr/local/bin/kube-slave-common.sh
+export LC_ALL="pt_BR.utf8"
 
 image_config_dir="/opt/openshift/configuration"
 image_config_path="${image_config_dir}/config.xml"
@@ -114,7 +115,7 @@ rm -rf /tmp/war
 
 # if `docker run` first argument start with `--` the user is passing jenkins launcher arguments
 if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
-   exec java $JAVA_MAX_HEAP_PARAM $LOW_MEMORY_PARAMS -Duser.home=${HOME} $JAVA_OPTS -Dfile.encoding=UTF8 -jar /usr/lib/jenkins/jenkins.war $JENKINS_OPTS "$@"
+   exec java $JAVA_MAX_HEAP_PARAM $LOW_MEMORY_PARAMS -Duser.home=${HOME} $JAVA_OPTS_DEFAULT $JAVA_OPTS -Dfile.encoding=UTF8 -jar /usr/lib/jenkins/jenkins.war $JENKINS_OPTS "$@"
 fi
 
 # As argument is not jenkins, assume user want to run his own process, for sample a `bash` shell to explore this image

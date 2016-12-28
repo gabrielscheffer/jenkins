@@ -8,6 +8,7 @@ export KUBE_CA=${KUBE_SA_DIR}/ca.crt
 export AUTH_TOKEN=${KUBE_SA_DIR}/token
 export JENKINS_PASSWORD KUBERNETES_SERVICE_HOST KUBERNETES_SERVICE_PORT
 export ITEM_ROOTDIR="\${ITEM_ROOTDIR}" # Preserve this variable Jenkins has in config.xml
+export LC_ALL="pt_BR.utf8"
 
 # Generate passwd file based on current uid
 function generate_passwd_file() {

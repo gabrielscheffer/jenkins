@@ -15,7 +15,9 @@ MAINTAINER Ben Parees <bparees@redhat.com>
 ENV JENKINS_VERSION=2.19 \
     HOME=/var/lib/jenkins \
     JENKINS_HOME=/var/lib/jenkins \
-    JENKINS_UC=https://updates.jenkins-ci.org
+    JENKINS_UC=https://updates.jenkins-ci.org \
+    TZ=America/Sao_Paulo \
+    LC_ALL="pt_BR.utf8"
 
 LABEL k8s.io.description="Jenkins is a continuous integration server" \
       k8s.io.display-name="Jenkins 2.19" \
@@ -33,12 +35,14 @@ RUN curl https://pkg.jenkins.io/redhat-stable/jenkins.repo -o /etc/yum.repos.d/j
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all  && \
-    localedef -f UTF-8 -i en_US en_US.UTF-8 && \
+    localedef -f UTF-8 -i pt_BR pt_BR.UTF-8 && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
     curl -L https://github.com/openshift/origin/releases/download/v1.3.0/openshift-origin-client-tools-v1.3.0-3ab7af3d097b57f933eccef684a714f2368804e7-linux-64bit.tar.gz | \
     tar -zx && \
     mv openshift*/oc /usr/local/bin && \
     rm -rf openshift-origin-client-tools-*
 
+ADD ./etc/locale.conf /etc/
 COPY ./contrib/openshift /opt/openshift
 COPY ./contrib/jenkins /usr/local/bin
 ADD ./contrib/s2i /usr/libexec/s2i
