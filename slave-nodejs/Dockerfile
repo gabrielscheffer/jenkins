@@ -12,7 +12,7 @@ ENV NODEJS_VERSION=4.4 \
 COPY contrib/bin/scl_enable /usr/local/bin/scl_enable
 
 # Install NodeJS
-RUN yum install -y centos-release-scl-rh && \
+RUN set -x && yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="rh-nodejs4 rh-nodejs4-npm rh-nodejs4-nodejs-nodemon" && \
     ln -s /usr/lib/node_modules/nodemon/bin/nodemon.js /usr/bin/nodemon && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \

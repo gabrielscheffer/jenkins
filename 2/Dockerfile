@@ -28,7 +28,7 @@ LABEL k8s.io.description="Jenkins is a continuous integration server" \
 # 8080 for main web interface, 50000 for slave agents
 EXPOSE 8080 50000
 
-RUN curl https://pkg.jenkins.io/redhat-stable/jenkins.repo -o /etc/yum.repos.d/jenkins.repo && \
+RUN set -x && curl https://pkg.jenkins.io/redhat-stable/jenkins.repo -o /etc/yum.repos.d/jenkins.repo && \
     rpm --import https://pkg.jenkins.io/redhat-stable/jenkins-ci.org.key && \
     yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="rsync gettext git tar zip unzip java-1.8.0-openjdk java-1.8.0-openjdk-devel jenkins-2.19.3-1.1 nss_wrapper" && \
